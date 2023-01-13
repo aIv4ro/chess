@@ -1,0 +1,9 @@
+:host {
+  height: var(--app-bar-height);
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--app-bar-color);
+}

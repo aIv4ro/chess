@@ -1,1 +1,10 @@
-<p>game-board works!</p>
+<div *ngFor="let row of board; let rowIndex = index" class="board-row">
+  <div *ngFor="let celd of row; let celdIndex" class="board-celd"
+    [ngClass]="{
+      'white-celd': (rowIndex + celdIndex) % 2 === 0,
+      'green-celd': (rowIndex + celdIndex) % 2 !== 0 
+    }"
+    [style.backgroundImage]="'url(/assets/black-king.png)'"
+  >
+  </div>
+</div>
