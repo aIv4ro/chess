@@ -1,11 +1,11 @@
 import { Piece } from './piece';
 
 export class Board {
-	pieces: (Piece | undefined)[];
+	squares: (Piece)[];
 
 	constructor(
-		pieces: (Piece | undefined)[]
+		pieces: (Piece)[]
 	) { 
-		this.pieces = pieces;
+		this.squares = pieces;
 	}
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { loadBoardFromFen } from 'src/app/utils/loadBoardFromFen';
 
 @Component({
 	selector: 'app-game-board',
@@ -6,14 +7,5 @@ import { Component } from '@angular/core';
 	styleUrls: ['./game-board.component.scss'],
 })
 export class GameBoardComponent {
-	board = [
-		[...Array(10).keys()],
-		[...Array(10).keys()],
-		[...Array(10).keys()],
-		[...Array(10).keys()],
-		[...Array(10).keys()],
-		[...Array(10).keys()],
-		[...Array(10).keys()],
-		[...Array(10).keys()]
-	];
+	board = loadBoardFromFen();
 }

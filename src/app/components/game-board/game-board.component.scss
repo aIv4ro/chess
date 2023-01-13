@@ -6,8 +6,9 @@
   background-color: var(--background-color);
 }
 
-.board-row {
-  display: flex;
+.board-container {
+  display: grid;
+  grid-template-columns: repeat(8, 45px);
 }
 
 .board-celd {

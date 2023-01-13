@@ -1,10 +1,12 @@
-<div *ngFor="let row of board; let rowIndex = index" class="board-row">
-  <div *ngFor="let celd of row; let celdIndex" class="board-celd"
+<div class="board-container">
+  <div *ngFor="let piece of board.squares; let pieceIndex = index"
+    class="board-celd"
     [ngClass]="{
-      'white-celd': (rowIndex + celdIndex) % 2 === 0,
-      'green-celd': (rowIndex + celdIndex) % 2 !== 0 
+      'white-celd': (piece.row + piece.col) % 2 === 0,
+      'green-celd': (piece.row + piece.col) % 2 !== 0 
     }"
-    [style.backgroundImage]="'url(/assets/black-king.png)'"
+    [style.backgroundImage]="piece.type === undefined ? '' : 'url(/assets/' + piece.color + '-' + piece.type + '.png)'"
+    [style.cursor]="piece.type === undefined ? '' : 'pointer'"
   >
   </div>
 </div>
