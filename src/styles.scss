@@ -1,8 +1,8 @@
 :root {
   --app-bar-height: 60px;
-  --app-bar-color: #05090c;
-  --background-color: #070c10;
-  --text-color: white;
+  --app-bar-color: #fff;
+  --background-color: #eee;
+  --text-color: black;
 }
 
 * {
@@ -17,4 +17,8 @@ html, body {
 
 p {
   margin: 0;
+}
+
+.elevation {
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
