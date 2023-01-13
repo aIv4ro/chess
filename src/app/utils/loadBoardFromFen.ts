@@ -1,7 +1,7 @@
 import { PieceColor } from '../enums/piece-color';
 import { PieceType } from '../enums/piece-type';
 import { Board } from '../models/board';
-import { Piece } from '../models/piece';
+import { Square } from '../models/piece';
 import { startFen } from './constants';
 
 const pieceTypeFromSymbol: {[key: string]: PieceType} = {
@@ -23,15 +23,14 @@ export function loadBoardFromFen(
 	let row = 0, col = 0;
 	const jumpRow = () => { row++; col = 0; };
 	const fillEmpty = (count: number) => {
-		Array.from(Array(count), () => board.squares[row * 8 + col] = new Piece(row, col++));
+		Array.from(Array(count), () => board.squares[row * 8 + col] = new Square(row, col++));
 	};
 	boardDistribution.split('').forEach(symbol => {
 		if (symbol === '/') return jumpRow();
 		if (isDigit(symbol)) return fillEmpty(parseInt(symbol));
-		const pieceColor = symbol.toLowerCase() === symbol ? PieceColor.white : PieceColor.black;
+		const pieceColor = symbol.toLowerCase() === symbol ? PieceColor.black : PieceColor.white;
 		const pieceType = pieceTypeFromSymbol[symbol.toLowerCase()];
-		board.squares[row * 8 + col] = new Piece(row, col++, pieceType, pieceColor);
+		board.squares[row * 8 + col] = new Square(row, col++, pieceType, pieceColor);
 	});
-	console.log(board);
 	return board;
 }

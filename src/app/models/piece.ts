@@ -1,7 +1,7 @@
 import { PieceColor } from '../enums/piece-color';
 import { PieceType } from '../enums/piece-type';
 
-export class Piece {
+export class Square {
 	row: number;
 	col: number;
 	type?: PieceType;

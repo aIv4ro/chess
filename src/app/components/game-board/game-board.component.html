@@ -1,12 +1,14 @@
 <div class="board-container elevation">
-  <div *ngFor="let piece of board.squares; let pieceIndex = index"
+  <div *ngFor="let square of board.squares"
     class="board-celd"
     [ngClass]="{
-      'white-celd': (piece.row + piece.col) % 2 === 0,
-      'green-celd': (piece.row + piece.col) % 2 !== 0 
+      'white-celd': (square.row + square.col) % 2 === 0,
+      'green-celd': (square.row + square.col) % 2 !== 0 ,
+      'selected-square': square === selectedSquare
     }"
-    [style.backgroundImage]="piece.type === undefined ? '' : 'url(/assets/' + piece.color + '-' + piece.type + '.png)'"
-    [style.cursor]="piece.type === undefined ? '' : 'pointer'"
+    [style.backgroundImage]="square.type === undefined ? '' : 'url(/assets/' + square.color + '-' + square.type + '.png)'"
+    [style.cursor]="square.type !== undefined && square.color === board.turn ? 'pointer' : ''"
+    (click)="onSquareClick(square)"
   >
   </div>
 </div>
