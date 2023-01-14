@@ -9,6 +9,7 @@ import { loadBoardFromFen } from 'src/app/utils/loadBoardFromFen';
 	styleUrls: ['./game-board.component.scss'],
 })
 export class GameBoardComponent {
+	audio = new Audio('/assets/move-self.webm');
 	board: Board = loadBoardFromFen();
 	selectedSquare?: Square;
 
@@ -25,6 +26,7 @@ export class GameBoardComponent {
 	}
 
 	moveSquare(from: Square, to: Square) {
+		this.audio.play();
 		const fromIndex = from.row * 8 + from.col;
 		const toIndex = to.row * 8 + to.col;
 		this.board.squares[toIndex] = new Square(
