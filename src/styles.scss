@@ -3,6 +3,11 @@
   --app-bar-color: #fff;
   --background-color: #eee;
   --text-color: black;
+  --celd-size: 55px;
+}
+
+@media (max-width: 500px) {
+  :root {--celd-size: 40px;}
 }
 
 * {
