@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Board } from 'src/app/models/board';
+import { Move } from 'src/app/models/move';
 import { Square } from 'src/app/models/piece';
 import { loadBoardFromFen } from 'src/app/utils/loadBoardFromFen';
 
@@ -12,6 +13,8 @@ export class GameBoardComponent {
 	audio = new Audio('/assets/move-self.webm');
 	board: Board = loadBoardFromFen();
 	selectedSquare?: Square;
+	selectedSquareMoves: Move[] = [];
+	posibleTargets: Square[] = [];
 
 	readonly letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
@@ -20,16 +23,30 @@ export class GameBoardComponent {
 			square.type === undefined || square.color !== this.board.turn
 		);
 		if (isSelectableSquare || this.selectedSquare === square) {
-			this.selectedSquare = undefined;
+			this.resetSelection();
 			return;
 		}
 		if (this.selectedSquare === undefined || this.selectedSquare.color === square.color) {
 			this.selectedSquare = square;
+			this.selectedSquareMoves = square.getAvailableMoves(this.board);
+			this.posibleTargets = this.selectedSquareMoves.map(({to}) => to);
 			return;
 		}
-		const hasMove = this.board.move(this.selectedSquare, square);
-		if (!hasMove) return;
-		this.audio.play();
+		const {hasMove, movedTo} = this.board.move(this.selectedSquare, square);
+		if (!hasMove || movedTo === undefined) return;
+		this.playSound(movedTo);
+		this.resetSelection();
+	}
+
+	resetSelection() {
 		this.selectedSquare = undefined;
+		this.selectedSquareMoves = [];
+		this.posibleTargets = [];
+	}
+
+	playSound(movedTo: Square) {
+		const soundPath = `/assets/${movedTo.color === undefined ? 'move-self' : 'capture'}.webm`;
+		this.audio.src = soundPath;
+		this.audio.play();
 	}
 }

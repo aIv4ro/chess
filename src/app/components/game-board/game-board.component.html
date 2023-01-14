@@ -6,10 +6,13 @@
     class="board-celd"
     [ngClass]="{
       'white-celd': (square.row + square.col) % 2 === 0,
-      'green-celd': (square.row + square.col) % 2 !== 0 ,
-      'selected-square': square === selectedSquare
+      'green-celd': (square.row + square.col) % 2 !== 0,
+      'remarqued-square-white': (square === selectedSquare || board.lastMove?.from === square || board.lastMove?.to === square) && (square.row + square.col) % 2 === 0,
+      'remarqued-square-green': (square === selectedSquare || board.lastMove?.from === square || board.lastMove?.to === square) && (square.row + square.col) % 2 !== 0,
+      'empty-target': posibleTargets.includes(square) && square.color === undefined && square.type === undefined,
+      'target': posibleTargets.includes(square) && square.type !== undefined && square.color !== undefined
     }"
-    [style.backgroundImage]="square.type === undefined ? '' : 'url(/assets/' + square.color + '-' + square.type + '.png)'"
+    [style.backgroundImage]="square | squareBackgroundImage"
     [style.cursor]="square.type !== undefined && square.color === board.turn ? 'pointer' : ''"
     (click)="onSquareClick(square)"
   >

@@ -1,27 +1,53 @@
 import { PieceColor } from '../enums/piece-color';
+import { Move } from './move';
 import { Square } from './piece';
+
+interface MoveResult {
+  hasMove: boolean, movedTo?: Square
+}
 
 export class Board {
 	squares: (Square)[];
 	turn = PieceColor.white;
-	lastMove?: Square;
+	lastMove?: Move;
+	readonly directionOffsets = [8, -8, -1, 1, 7, -7, 9, -9];
+	readonly numOfSuqaresToEdge: number[][] = [];
 
 	constructor(
-		pieces: (Square)[]
+		squares: (Square)[]
 	) { 
-		this.squares = pieces;
+		this.squares = squares;
+		this.generateNumOfSquaresToEdge();
+	}
+
+	generateNumOfSquaresToEdge() {
+		for (let row = 0; row < 8; row++) {
+			const west = row;
+			const east = 7 - row;
+			for (let col = 0; col < 8; col++) {
+				const south = col;
+				const north = 7 - col;
+				const index = row * 8 + col;
+				this.numOfSuqaresToEdge[index] = [
+					north, south, west, east, Math.min(north, west),
+					Math.min(south, west), Math.min(south, east), 
+					Math.min(north, east),
+				];
+			}
+		}
 	}
 
 	changeTurn() {
 		this.turn = this.turn === PieceColor.white ? PieceColor.black : PieceColor.white;
 	}
   
-	move(square: Square, to: Square): boolean {
+	move(square: Square, to: Square): MoveResult {
 		const availableMoves = square.getAvailableMoves(this);
-		if (!availableMoves.includes(to)) return false; 
+		if (availableMoves.find(move => move.to === to) === undefined) return {hasMove: false, movedTo: undefined}; 
 		this.squares[to.index] = new Square(to.row, to.col, square.type, square.color);
 		this.squares[square.index] = new Square(square.row, square.col, undefined, undefined);
 		this.changeTurn();
-		return true;
+		this.lastMove = new Move(this.squares[square.index], this.squares[to.index]);
+		return {hasMove: true, movedTo: to};
 	}
 }

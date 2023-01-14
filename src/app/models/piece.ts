@@ -1,6 +1,7 @@
 import { PieceColor } from '../enums/piece-color';
 import { PieceType } from '../enums/piece-type';
 import { Board } from './board';
+import { Move } from './move';
 
 export class Square {
 	row: number;
@@ -21,9 +22,10 @@ export class Square {
 		return this.row * 8 + this.col;
 	}
 
-	getAvailableMoves(board: Board): Square[] {
+	getAvailableMoves(board: Board): Move[] {
+		if (this.type === undefined || this.color === undefined) return [];
 		return board.squares.filter(square => {
 			return square.color !== this.color;
-		});
+		}).map(square => new Move(this, square));
 	}
 }
