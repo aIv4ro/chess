@@ -13,6 +13,8 @@ export class GameBoardComponent {
 	board: Board = loadBoardFromFen();
 	selectedSquare?: Square;
 
+	readonly letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
 	onSquareClick(square: Square) {
 		const isSelectableSquare = this.selectedSquare === undefined && (
 			square.type === undefined || square.color !== this.board.turn
@@ -21,21 +23,13 @@ export class GameBoardComponent {
 			this.selectedSquare = undefined;
 			return;
 		}
-		if (this.selectedSquare === undefined) this.selectedSquare = square;
-		else this.moveSquare(this.selectedSquare, square);
-	}
-
-	moveSquare(from: Square, to: Square) {
+		if (this.selectedSquare === undefined || this.selectedSquare.color === square.color) {
+			this.selectedSquare = square;
+			return;
+		}
+		const hasMove = this.board.move(this.selectedSquare, square);
+		if (!hasMove) return;
 		this.audio.play();
-		const fromIndex = from.row * 8 + from.col;
-		const toIndex = to.row * 8 + to.col;
-		this.board.squares[toIndex] = new Square(
-			to.row, to.col, from.type, from.color
-		);
-		this.board.squares[fromIndex] = new Square(
-			from.row, from.col, undefined, undefined
-		);
 		this.selectedSquare = undefined;
-		this.board.changeTurn();
 	}
 }

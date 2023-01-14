@@ -1,3 +1,6 @@
+<div class="turn-container">
+  <div class="turn elevation" [ngClass]="board.turn + '-turn'"></div>
+</div>
 <div class="board-container elevation">
   <div *ngFor="let square of board.squares"
     class="board-celd"
@@ -10,5 +13,7 @@
     [style.cursor]="square.type !== undefined && square.color === board.turn ? 'pointer' : ''"
     (click)="onSquareClick(square)"
   >
+    <p *ngIf="square.col === 0" class="info row-info">{{square.row + 1}}</p>
+    <p *ngIf="square.row === 7" class="info col-info">{{letters[square.col]}}</p>
   </div>
 </div>
