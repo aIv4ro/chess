@@ -7,14 +7,14 @@ interface MoveResult {
 }
 
 export class Board {
-	squares: (Square)[];
+	squares: Square[];
 	turn = PieceColor.white;
 	lastMove?: Move;
 	readonly directionOffsets = [8, -8, -1, 1, 7, -7, 9, -9];
 	readonly numOfSuqaresToEdge: number[][] = [];
 
 	constructor(
-		squares: (Square)[]
+		squares: Square[]
 	) { 
 		this.squares = squares;
 		this.generateNumOfSquaresToEdge();
