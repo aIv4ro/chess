@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PieceColor } from 'src/app/enums/piece-color';
 import { Board } from 'src/app/models/board';
 import { Move } from 'src/app/models/move';
 import { Square } from 'src/app/models/piece';
+import { coronations } from 'src/app/utils/constants';
 import { loadBoardFromFen } from 'src/app/utils/loadBoardFromFen';
+import { CoronationDialogComponent } from '../coronation-dialog/coronation-dialog.component';
 
 @Component({
 	selector: 'app-game-board',
@@ -10,6 +14,10 @@ import { loadBoardFromFen } from 'src/app/utils/loadBoardFromFen';
 	styleUrls: ['./game-board.component.scss'],
 })
 export class GameBoardComponent {
+	constructor(
+		public dialog: MatDialog
+	) {}
+
 	audio = new Audio('/assets/move-self.webm');
 	board: Board = loadBoardFromFen();
 	selectedSquare?: Square;
@@ -35,7 +43,14 @@ export class GameBoardComponent {
 		const {hasMove, movedTo, coronation} = this.board.move(this.selectedSquare, square);
 		if (!hasMove || movedTo === undefined) return;
 		if (coronation) {
-
+			this.dialog.open(
+				CoronationDialogComponent, {
+					data: {
+						pieces: coronations,
+						color: this.board.turn === PieceColor.white ? PieceColor.black : PieceColor.white
+					}
+				},
+			);
 		}
 		this.playSound(movedTo);
 		this.resetSelection();

@@ -5,6 +5,9 @@ import { AppComponent } from './app.component';
 import { GameBoardComponent } from './components/game-board/game-board.component';
 import { AppBarComponent } from './components/app-bar/app-bar.component';
 import { SquareBackgroundImagePipe } from './pipes/square-background-image.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoronationDialogComponent } from './components/coronation-dialog/coronation-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
 	declarations: [
@@ -12,10 +15,13 @@ import { SquareBackgroundImagePipe } from './pipes/square-background-image.pipe'
 		GameBoardComponent,
 		AppBarComponent,
 		SquareBackgroundImagePipe,
+		CoronationDialogComponent,
 	],
 	imports: [
 		BrowserModule,
-		AppRoutingModule
+		AppRoutingModule,
+		BrowserAnimationsModule,
+		MatDialogModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

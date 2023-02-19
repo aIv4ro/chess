@@ -49,7 +49,6 @@ export class Board {
 		this.squares[square.index] = new Square(square.row, square.col, undefined, undefined);
 		this.changeTurn();
 		this.lastMove = move;
-		console.log(move);
 		return {hasMove: true, movedTo: to, coronation: move.coronation};
 	}
 }
