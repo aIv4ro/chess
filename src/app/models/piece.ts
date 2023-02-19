@@ -25,10 +25,9 @@ export class Square {
 	getAvailableMoves(board: Board): Move[] {
 		if (this.type === undefined || this.color === undefined) return [];
 		if (this.type === PieceType.pawn) {
-			if (this.color === PieceColor.white) {
-				return getWhitePawnMoves(this, board);
-			}
-			return getBlackPawnMoves(this, board);
+			return this.color === PieceColor.white 
+				? getWhitePawnMoves(this, board) 
+				: getBlackPawnMoves(this, board);
 		}
 		if (this.type === PieceType.knight) {
 			return getKnightMoves(this, board);
@@ -58,21 +57,22 @@ function getWhitePawnMoves(from: Square, board: Board): Move[] {
 	const {squares} = board;
 	const moves: Move[] = [];
 	if (fromIndex - 8 >= 0 && squares[fromIndex - 8]?.type === undefined) {
-		moves.push(new Move(from, squares[fromIndex - 8]));
+		const toRow = getRow(fromIndex - 8);
+		moves.push(new Move(from, squares[fromIndex - 8], toRow === 0));
 	}
 	if (from.row === 6 && fromIndex - 16 >= 0 && squares[fromIndex - 16]?.type === undefined && squares[fromIndex - 8]?.type === undefined) {
 		moves.push(new Move(from, squares[fromIndex - 16]));
 	}
 	if (fromIndex - 7 >= 0) {
 		const attackSquare = squares[fromIndex - 7];
-		if (attackSquare.type !== undefined && attackSquare.color !== PieceColor.white) {
-			moves.push(new Move(from, attackSquare));
+		if (attackSquare.type !== undefined && attackSquare.color !== PieceColor.white && getDistance({jumpSquare: fromIndex - 7, row: from.row, col: from.col}) === 1) {
+			moves.push(new Move(from, attackSquare, attackSquare.row === 0));
 		}
 	}
 	if (fromIndex - 9 >= 0) {
 		const attackSquare = squares[fromIndex - 9];
-		if (attackSquare.type !== undefined && attackSquare.color !== PieceColor.white) {
-			moves.push(new Move(from, attackSquare));
+		if (attackSquare.type !== undefined && attackSquare.color !== PieceColor.white && getDistance({jumpSquare: fromIndex - 9, row: from.row, col: from.col}) === 1) {
+			moves.push(new Move(from, attackSquare, attackSquare.row === 0));
 		}
 	}
 	return moves;
@@ -84,21 +84,22 @@ function getBlackPawnMoves(from: Square, board: Board): Move[] {
 	const {squares} = board;
 	const moves: Move[] = [];
 	if (fromIndex + 8 < 64 && squares[fromIndex + 8]?.type === undefined) {
-		moves.push(new Move(from, squares[fromIndex + 8]));
+		const toRow = getRow(fromIndex + 8);
+		moves.push(new Move(from, squares[fromIndex + 8], toRow === 7));
 	}
 	if (from.row === 1 && fromIndex + 16 < 64 && squares[fromIndex + 16]?.type === undefined && squares[fromIndex + 8]?.type === undefined) {
 		moves.push(new Move(from, squares[fromIndex + 16]));
 	}
 	if (fromIndex + 7 < 64) {
 		const attackSquare = squares[fromIndex + 7];
-		if (attackSquare.type !== undefined && attackSquare.color !== PieceColor.black) {
-			moves.push(new Move(from, attackSquare));
+		if (attackSquare.type !== undefined && attackSquare.color !== PieceColor.black && getDistance({jumpSquare: fromIndex + 7, row: from.row, col: from.col})) {
+			moves.push(new Move(from, attackSquare, attackSquare.row === 7));
 		}
 	}
 	if (fromIndex + 9 < 64) {
 		const attackSquare = squares[fromIndex + 9];
-		if (attackSquare.type !== undefined && attackSquare.color !== PieceColor.black) {
-			moves.push(new Move(from, attackSquare));
+		if (attackSquare.type !== undefined && attackSquare.color !== PieceColor.black && getDistance({jumpSquare: fromIndex + 9, row: from.row, col: from.col})) {
+			moves.push(new Move(from, attackSquare, attackSquare.row === 9));
 		}
 	}
 	return moves;
@@ -182,10 +183,14 @@ function getRookMoves(from: Square, board: Board): Move[] {
 	return moves;
 }
 
+function getRow(index: number) {
+	return Math.floor(index / 8);
+}
+
 function getDistance(
 	{jumpSquare, row, col}: {jumpSquare: number, row: number, col: number}
 ): number {
-	const squareY = Math.floor(jumpSquare / 8);
+	const squareY = getRow(jumpSquare);
 	const squareX = jumpSquare - squareY * 8;
 	return Math.max(Math.abs(col - squareX), Math.abs(row - squareY));
 }

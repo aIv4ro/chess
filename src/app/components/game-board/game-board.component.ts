@@ -32,8 +32,11 @@ export class GameBoardComponent {
 			this.posibleTargets = this.selectedSquareMoves.map(({to}) => to);
 			return;
 		}
-		const {hasMove, movedTo} = this.board.move(this.selectedSquare, square);
+		const {hasMove, movedTo, coronation} = this.board.move(this.selectedSquare, square);
 		if (!hasMove || movedTo === undefined) return;
+		if (coronation) {
+
+		}
 		this.playSound(movedTo);
 		this.resetSelection();
 	}

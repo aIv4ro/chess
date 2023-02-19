@@ -3,7 +3,7 @@ import { Move } from './move';
 import { Square } from './piece';
 
 interface MoveResult {
-  hasMove: boolean, movedTo?: Square
+  hasMove: boolean, movedTo?: Square, coronation?: boolean
 }
 
 export class Board {
@@ -43,11 +43,13 @@ export class Board {
   
 	move(square: Square, to: Square): MoveResult {
 		const availableMoves = square.getAvailableMoves(this);
-		if (availableMoves.find(move => move.to === to) === undefined) return {hasMove: false, movedTo: undefined}; 
+		const move = availableMoves.find(move => move.to === to);
+		if (move === undefined) return {hasMove: false, movedTo: undefined}; 
 		this.squares[to.index] = new Square(to.row, to.col, square.type, square.color);
 		this.squares[square.index] = new Square(square.row, square.col, undefined, undefined);
 		this.changeTurn();
-		this.lastMove = new Move(this.squares[square.index], this.squares[to.index]);
-		return {hasMove: true, movedTo: to};
+		this.lastMove = move;
+		console.log(move);
+		return {hasMove: true, movedTo: to, coronation: move.coronation};
 	}
 }
