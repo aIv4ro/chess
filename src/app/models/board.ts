@@ -1,4 +1,5 @@
 import { PieceColor } from '../enums/piece-color';
+import { PieceType } from '../enums/piece-type';
 import { Move } from './move';
 import { Square } from './piece';
 
@@ -50,5 +51,10 @@ export class Board {
 		this.changeTurn();
 		this.lastMove = move;
 		return {hasMove: true, movedTo: to, coronation: move.coronation};
+	}
+
+	changePiece({piece, row, col}: { piece: PieceType, row: number, col: number }) {
+		const index = row * 8 + col;
+		this.squares[index].type = piece;
 	}
 }

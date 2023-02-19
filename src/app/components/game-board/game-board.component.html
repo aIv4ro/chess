@@ -12,7 +12,7 @@
       'empty-target': posibleTargets.includes(square) && square.color === undefined && square.type === undefined,
       'target': posibleTargets.includes(square) && square.type !== undefined && square.color !== undefined
     }"
-    [style.backgroundImage]="square | squareBackgroundImage"
+    [style.backgroundImage]="square.color ? 'url(/assets/' + square.color + '-' + square.type + '.png' : null"
     [style.cursor]="square.type !== undefined && square.color === board.turn ? 'pointer' : ''"
     (click)="onSquareClick(square)"
   >

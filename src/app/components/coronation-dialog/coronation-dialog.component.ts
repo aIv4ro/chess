@@ -10,7 +10,13 @@ import { PieceType } from 'src/app/enums/piece-type';
 })
 export class CoronationDialogComponent {
 	constructor(
-		public dialogRef: MatDialogRef<CoronationDialogComponent>,
+		public dialogRef: MatDialogRef<CoronationDialogComponent, PieceType>,
 		@Inject(MAT_DIALOG_DATA) public data: {pieces: PieceType[], color: PieceColor}
 	) {}
+
+	handleClick(
+		piece: PieceType
+	) {
+		this.dialogRef.close(piece);
+	}
 }

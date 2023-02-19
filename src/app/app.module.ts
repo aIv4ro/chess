@@ -8,6 +8,7 @@ import { SquareBackgroundImagePipe } from './pipes/square-background-image.pipe'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoronationDialogComponent } from './components/coronation-dialog/coronation-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatRippleModule} from '@angular/material/core';
 
 @NgModule({
 	declarations: [
@@ -21,7 +22,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
-		MatDialogModule
+		MatDialogModule,
+		MatRippleModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

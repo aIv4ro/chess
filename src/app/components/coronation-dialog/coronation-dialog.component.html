@@ -1,1 +1,6 @@
-<p>coronation-dialog works!</p>
+<button (click)="handleClick(piece)" matRipple *ngFor="let piece of data.pieces; let i = index" class="celd" [ngClass]="{
+	'white-celd': i % 2 === 0,
+	'green-celd': i % 2 !== 0}"
+	[style.backgroundImage]="'url(/assets/' + data.color + '-' + piece + '.png'"
+	[matRippleColor]="i % 2 === 0 ? '#7696564A' : '#EEEED24A'"
+></button>

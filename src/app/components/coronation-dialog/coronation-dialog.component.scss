@@ -1,0 +1,26 @@
+:host {
+	display: flex;
+	button {
+		padding: 0;
+		outline: none;
+		cursor: pointer;
+		border: none;
+	}
+}
+.celd {
+	height: var(--celd-size);
+	width: var(--celd-size);
+	font-weight: bold;
+	display: grid;
+	place-content: center;
+	background-size: calc(var(--celd-size) - 5px);
+	background-position: center;
+	background-repeat: no-repeat;
+	position: relative;
+}
+.white-celd {
+	background-color: #EEEED2;
+}
+.green-celd {
+	background-color: #769656;
+}	

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { map } from 'rxjs';
 import { PieceColor } from 'src/app/enums/piece-color';
+import { PieceType } from 'src/app/enums/piece-type';
 import { Board } from 'src/app/models/board';
 import { Move } from 'src/app/models/move';
 import { Square } from 'src/app/models/piece';
@@ -43,15 +45,29 @@ export class GameBoardComponent {
 		const {hasMove, movedTo, coronation} = this.board.move(this.selectedSquare, square);
 		if (!hasMove || movedTo === undefined) return;
 		if (coronation) {
-			this.dialog.open(
+			const dialogRef = this.dialog.open(
 				CoronationDialogComponent, {
+					disableClose: true,
 					data: {
 						pieces: coronations,
-						color: this.board.turn === PieceColor.white ? PieceColor.black : PieceColor.white
+						color: this.board.turn === PieceColor.white ? PieceColor.black : PieceColor.white,
 					}
 				},
 			);
-		}
+			dialogRef.afterClosed().pipe(
+				map(res => res as PieceType)
+			).subscribe(res => {
+				if (!this.board.lastMove) return;
+				const {row, col} = this.board.lastMove.to;
+				console.log([...this.board.squares][7]);
+				this.board.changePiece({piece: res, row, col});
+				console.log([...this.board.squares][7]);
+				this.board.squares = [...this.board.squares];
+				this.playSound(movedTo);
+				this.resetSelection();
+			});
+			return;
+		} 
 		this.playSound(movedTo);
 		this.resetSelection();
 	}
