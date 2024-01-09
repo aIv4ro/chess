@@ -9,7 +9,7 @@ export class Piece {
   }
 
   getAsset () {
-    return `/pieces/${this.color}-${this.type}.png`
+    return `/pieces/${this.color}${this.type}.webp`
   }
 }
 
