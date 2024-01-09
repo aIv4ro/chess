@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast'
 import { Board } from './components/board'
 import { BoardProvider } from './components/board-provider'
 
@@ -10,6 +11,7 @@ function App () {
           <Board />
         </BoardProvider>
       </main>
+      <Toaster position='bottom-right' />
     </div>
   )
 }

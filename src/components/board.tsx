@@ -1,4 +1,5 @@
 import { useBoardContext } from '../hooks/use-board-context'
+import toast from '../utils/toast'
 import { BoardSquare } from './board-square'
 import { MatchState } from './match-state'
 import { PiecePicker } from './piece-picker'
@@ -9,8 +10,12 @@ export function Board () {
   const handleCopyFen = () => {
     if (navigator.clipboard != null) {
       navigator.clipboard.writeText(board.getFen())
-        .then()
-        .catch(err => console.log(err))
+        .then(() => {
+          toast.success('Copied FEN to clipboard')
+        })
+        .catch(() => {
+          toast.error('Could not copy FEN to clipboard')
+        })
     }
   }
 
