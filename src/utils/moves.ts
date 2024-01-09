@@ -6,7 +6,17 @@ import { Square } from '../types/square'
 type SquareWithPiece = Square & { piece: Piece }
 const squareWithPiece = (square: Square): square is SquareWithPiece => square.piece != null
 
-export function getSquareMoves ({ board, square, filterChecks = true }: { board: Board, square: Square, filterChecks?: boolean }): Move[] {
+export function getSquareMoves ({
+  board,
+  square,
+  filterChecks = true,
+  checkCastle = true
+}: {
+  board: Board
+  square: Square
+  filterChecks?: boolean
+  checkCastle?: boolean
+}): Move[] {
   if (!squareWithPiece(square)) {
     return []
   }
@@ -30,7 +40,7 @@ export function getSquareMoves ({ board, square, filterChecks = true }: { board:
       moves = getQueenMoves({ board, square })
       break
     case PieceType.King:
-      moves = getKingMoves({ board, square })
+      moves = getKingMoves({ board, square, checkCastle })
       break
   }
 
@@ -178,7 +188,7 @@ function getQueenMoves ({ board, square }: { board: Board, square: SquareWithPie
   ]
 }
 
-function getKingMoves ({ board, square }: { board: Board, square: SquareWithPiece }): Move[] {
+function getKingMoves ({ board, square, checkCastle }: { board: Board, square: SquareWithPiece, checkCastle: boolean }): Move[] {
   const moves: Move[] = []
   const { file, rank } = square
   const directions = [
@@ -204,11 +214,21 @@ function getKingMoves ({ board, square }: { board: Board, square: SquareWithPiec
       moves.push(new Move({ from: square, to: targetSquare }))
     }
   })
+  if (!checkCastle) {
+    return moves
+  }
   const castle = square.piece.color === PieceColor.White ? board.whiteCastle : board.blackCastle
   const castleFiles: number[][] = []
   if (castle.kingSide) castleFiles.push([5, 6])
   if (castle.queenSide) castleFiles.push([1, 2, 3])
-  for (const castleFile of castleFiles) {
+  const enemyColor = square.piece.color === PieceColor.White ? PieceColor.Black : PieceColor.White
+  castleFiles.filter(castleFile => {
+    const kingPathSquares = castleFile.length === 2 ? [5, 6] : [2, 3]
+    return kingPathSquares.every(file => {
+      const pathSquare = board.squares.find(s => s.file === file && s.rank === square.rank) as SquareWithPiece
+      return !isUnderAttack({ board, square: pathSquare, color: enemyColor })
+    })
+  }).forEach(castleFile => {
     const rookFile = castleFile.length === 2 ? 7 : 0
     const rookSquare = board.squares.find(s => s.file === rookFile && s.rank === square.rank)
     if (rookSquare != null && squareWithPiece(rookSquare) && rookSquare.piece.type === PieceType.Rook && rookSquare.piece.color === square.piece.color) {
@@ -220,6 +240,25 @@ function getKingMoves ({ board, square }: { board: Board, square: SquareWithPiec
         moves.push(kingMove)
       }
     }
-  }
+  })
   return moves
+}
+
+function isUnderAttack ({ board, square, color }: { board: Board, square: Square, color: PieceColor }): boolean {
+  const moves = getAllMoves({ board, color })
+  return moves.some(move => move.to === square)
+}
+
+function getAllMoves ({
+  board,
+  color
+}: {
+  board: Board
+  color: PieceColor
+}): Move[] {
+  return board.squares.filter(square => {
+    return squareWithPiece(square) && square.piece.color === color
+  }).flatMap(square => {
+    return getSquareMoves({ board, square, filterChecks: false, checkCastle: false })
+  })
 }
