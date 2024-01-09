@@ -27,8 +27,6 @@ export function useBoard () {
     setMatchState(board.getMatchState())
   }, [board, setMatchState])
 
-  useEffect(() => { console.log(matchState) }, [matchState])
-
   const selectSuquare = (square: Square) => {
     setSelectedSquare(square)
     const moves = getSquareMoves({ board, square })

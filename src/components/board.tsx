@@ -8,7 +8,9 @@ export function Board () {
 
   const handleCopyFen = () => {
     if (navigator.clipboard != null) {
-      navigator.clipboard.writeText(board.getFen()).then().catch(err => console.log(err))
+      navigator.clipboard.writeText(board.getFen())
+        .then()
+        .catch(err => console.log(err))
     }
   }
 
