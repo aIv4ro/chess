@@ -57,17 +57,21 @@ export class Board {
     if (king == null) return false
     const enemyColor = color === PieceColor.White ? PieceColor.Black : PieceColor.White
     const enemyPieces = this.squares.filter(square => square.piece?.color === enemyColor)
-    const enemyMoves = enemyPieces.flatMap(square => getSquareMoves({ board: this, square, filterChecks: false }))
-    return enemyMoves.some(move => move.to.identifier === king.identifier)
+    for (const square of enemyPieces) {
+      const moves = getSquareMoves({ board: this, square, filterChecks: false })
+      if (moves.some(move => move.to.identifier === king.identifier)) return true
+    }
+    return false
   }
 
   getMatchState (): MatchState {
+    const turnSquares = this.squares.filter(square => square.piece?.color === this.turn)
+    const king = turnSquares.find(square => square.piece?.type === PieceType.King)
+    const kingMoves = getSquareMoves({ board: this, square: king!, filterChecks: true })
     const isCheck = this.isCheck(this.turn)
-    const pieces = this.squares.filter(square => square.piece?.color === this.turn)
-    const moves = pieces.flatMap(square => getSquareMoves({ board: this, square, filterChecks: true }))
-    if (isCheck && moves.length === 0) return MatchState.Checkmate
-    if (!isCheck && moves.length === 0) return MatchState.Stalemate
-    return MatchState.Other
+    if (isCheck && kingMoves.length === 0) return MatchState.Checkmate
+    if (!isCheck && turnSquares.some(square => getSquareMoves({ board: this, square, filterChecks: true }).length > 0)) return MatchState.Other
+    return MatchState.Stalemate
   }
 
   move (move: Move, changeTurn = true) {
