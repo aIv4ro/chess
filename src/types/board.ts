@@ -66,11 +66,10 @@ export class Board {
 
   getMatchState (): MatchState {
     const turnSquares = this.squares.filter(square => square.piece?.color === this.turn)
-    const king = turnSquares.find(square => square.piece?.type === PieceType.King)
-    const kingMoves = getSquareMoves({ board: this, square: king!, filterChecks: true })
+    const hasMoves = turnSquares.some(square => getSquareMoves({ board: this, square, filterChecks: true }).length > 0)
+    if (hasMoves) return MatchState.Other
     const isCheck = this.isCheck(this.turn)
-    if (isCheck && kingMoves.length === 0) return MatchState.Checkmate
-    if (!isCheck && turnSquares.some(square => getSquareMoves({ board: this, square, filterChecks: true }).length > 0)) return MatchState.Other
+    if (isCheck) return MatchState.Checkmate
     return MatchState.Stalemate
   }
 
