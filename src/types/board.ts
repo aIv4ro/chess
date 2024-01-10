@@ -8,6 +8,8 @@ import { getFENFromBoard } from '../utils/fen'
 import { MatchState } from './game-state'
 
 export class Board {
+  public readonly captureStack: Piece[] = []
+
   constructor (
     public turn: PieceColor,
     public readonly squares: Square[],
@@ -76,6 +78,9 @@ export class Board {
   move (move: Move, changeTurn = true) {
     this.updateSquares(move)
     this.moveStack.push(move)
+    if (move.to.piece?.color !== this.turn && move.to.piece != null) {
+      this.captureStack.push(move.to.piece)
+    }
     if (changeTurn) this.changeTurn()
   }
 

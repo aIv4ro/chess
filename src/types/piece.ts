@@ -1,18 +1,3 @@
-export class Piece {
-  constructor (
-    public readonly type: PieceType,
-    public readonly color: PieceColor
-  ) {}
-
-  clone () {
-    return new Piece(this.type, this.color)
-  }
-
-  getAsset () {
-    return `/pieces/${this.color}${this.type}.webp`
-  }
-}
-
 export const enum PieceType {
   Pawn = 'p',
   Knight = 'n',
@@ -25,4 +10,29 @@ export const enum PieceType {
 export const enum PieceColor {
   White = 'w',
   Black = 'b',
+}
+
+const pieceTypeValue = {
+  [PieceType.Pawn]: 1,
+  [PieceType.Knight]: 3,
+  [PieceType.Bishop]: 3,
+  [PieceType.Rook]: 5,
+  [PieceType.Queen]: 9,
+  [PieceType.King]: 0
+}
+export class Piece {
+  public readonly value = pieceTypeValue[this.type]
+
+  constructor (
+    public readonly type: PieceType,
+    public readonly color: PieceColor
+  ) {}
+
+  clone () {
+    return new Piece(this.type, this.color)
+  }
+
+  getAsset () {
+    return `/pieces/${this.color}${this.type}.webp`
+  }
 }

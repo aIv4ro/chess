@@ -5,11 +5,18 @@ import { Nullable } from 'vitest'
 import { Square } from '../types/square'
 import { getSquareMoves } from '../utils/moves'
 import { Move } from '../types/move'
-import { Piece } from '../types/piece'
+import { Piece, PieceColor } from '../types/piece'
 import { MatchState } from '../types/game-state'
+import { Player } from '../types/player'
+import { User } from '../types/user'
+
+const wP = new Player(new User('White Player', 'https://picsum.photos/200/200', 0, 'us'), PieceColor.White)
+const bP = new Player(new User('Black Player', 'https://picsum.photos/200/200', 0, 'es'), PieceColor.Black)
 
 export function useBoard () {
   const [board, setBoard] = useState<Board>(getBoardFromFEN())
+  const [whitePlayer] = useState<Nullable<Player>>(wP)
+  const [blackPlayer] = useState<Nullable<Player>>(bP)
   const [selectedSquare, setSelectedSquare] = useState<Nullable<Square>>()
   const [availableMoves, setAvailableMoves] = useState<Move[]>([])
   const [promotion, setPromotion] = useState<{
@@ -25,7 +32,7 @@ export function useBoard () {
 
   useEffect(() => {
     setMatchState(board.getMatchState())
-  }, [board, setMatchState])
+  }, [board])
 
   const selectSuquare = (square: Square) => {
     setSelectedSquare(square)
@@ -77,6 +84,8 @@ export function useBoard () {
 
   return {
     board,
+    whitePlayer,
+    blackPlayer,
     selectedSquare,
     availableMoves,
     promotion,
