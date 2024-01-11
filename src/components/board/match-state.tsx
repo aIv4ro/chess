@@ -1,8 +1,8 @@
-import { useBoardContext } from '../hooks/use-board-context'
-import { PieceColor } from '../types/piece'
-import { MatchState as MatchStateEnum } from '../types/game-state'
-import { Player } from '../types/player'
-import { Nullable } from '../types/nullable'
+import { useBoardContext } from '../../hooks/use-board-context'
+import { PieceColor } from '../../types/piece'
+import { MatchState as MatchStateEnum } from '../../types/game-state'
+import { Player } from '../../types/player'
+import { Nullable } from '../../types/nullable'
 import { twMerge } from 'tailwind-merge'
 
 export function MatchState () {

@@ -1,9 +1,9 @@
 import { twMerge } from 'tailwind-merge'
-import { useBoardContext } from '../hooks/use-board-context'
-import { Nullable } from '../types/nullable'
-import { Piece, PieceColor } from '../types/piece'
-import { Player } from '../types/player'
-import { FlagIcon } from './icons/flags'
+import { useBoardContext } from '../../hooks/use-board-context'
+import { Nullable } from '../../types/nullable'
+import { Piece, PieceColor } from '../../types/piece'
+import { Player } from '../../types/player'
+import { FlagIcon } from '../icons/flags'
 
 export function BoardPlayer ({
   player

@@ -1,5 +1,5 @@
-import { Square } from '../types/square'
-import { useSquare } from '../hooks/use-square'
+import { Square } from '../../types/square'
+import { useSquare } from '../../hooks/use-square'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 

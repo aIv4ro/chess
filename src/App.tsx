@@ -1,6 +1,6 @@
 import { Toaster } from 'react-hot-toast'
-import { Board } from './components/board'
-import { BoardProvider } from './components/board-provider'
+import { Board } from './components/board/board'
+import { BoardProvider } from './components/board/board-provider'
 
 function App () {
   return (

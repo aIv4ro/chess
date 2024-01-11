@@ -1,4 +1,4 @@
-import { useBoardContext } from '../hooks/use-board-context'
+import { useBoardContext } from '../../hooks/use-board-context'
 import { BoardPlayer } from './board-player'
 import { BoardSquare } from './board-square'
 import { MatchState } from './match-state'

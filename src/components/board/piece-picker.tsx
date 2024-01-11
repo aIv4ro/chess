@@ -1,5 +1,5 @@
-import { useBoardContext } from '../hooks/use-board-context'
-import { Piece, PieceType } from '../types/piece'
+import { useBoardContext } from '../../hooks/use-board-context'
+import { Piece, PieceType } from '../../types/piece'
 
 const types = [PieceType.Queen, PieceType.Rook, PieceType.Knight, PieceType.Bishop]
 
