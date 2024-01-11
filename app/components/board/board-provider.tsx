@@ -6,10 +6,10 @@ export function BoardProvider ({
   players
 }: {
   children: React.ReactNode
-  players: Players
+  players?: Players
 }) {
   const boardState = useBoard({
-    initialPlayers: players
+    initialPlayers: players ?? null
   })
   return (
     <BoardContext.Provider value={boardState}>
