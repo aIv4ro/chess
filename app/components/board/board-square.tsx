@@ -35,7 +35,7 @@ export function BoardSquare ({
       }}
       onClick={clickable ? handleClick : undefined}
     >
-      {asset != null && (<img src={asset} />)}
+      {asset != null && (<img src={asset} alt={`piece ${square.piece?.type}`} />)}
     </div>
   )
 }

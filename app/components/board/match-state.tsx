@@ -61,7 +61,7 @@ function PlayerInfo ({
       <picture className={twMerge('w-14 border-[3px] rounded overflow-hidden',
         isWinner ? 'border-green-400' : border)}
       >
-        <img src={player.user.avatar} />
+        <img alt={player.user.name} src={player.user.avatar} />
       </picture>
       <h4 className='text-sm text-center w-[12ch] text-ellipsis overflow-hidden whitespace-nowrap font-semibold'>
         {player.user.name}

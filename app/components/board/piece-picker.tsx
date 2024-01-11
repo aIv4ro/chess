@@ -30,7 +30,10 @@ export function PiecePicker () {
               }}
               className='w-11 h-11 sm:w-12 sm:h-12 border border-gray-500'
             >
-              <img src={asset} />
+              <img
+                alt={`piece ${pieceColor}${pieceType}`}
+                src={asset}
+              />
             </button>
           )
         })

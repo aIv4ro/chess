@@ -70,7 +70,12 @@ function PlayerCaptures ({
           <div className='flex items-center' key={index}>
             {captures.map((capture, index) => {
               return (
-                <img className={twMerge('w-5', index > 0 && '-ml-3')} key={index} src={capture.getAsset()} />
+                <img
+                  alt={`chess piece ${capture.color}${capture.type}`}
+                  src={capture.getAsset()}
+                  className={twMerge('w-5', index > 0 && '-ml-3')}
+                  key={index}
+                />
               )
             })}
           </div>
