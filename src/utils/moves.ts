@@ -85,7 +85,13 @@ function getPawnMoves ({ board, square }: { board: Board, square: SquareWithPiec
     moves.push(new Move({ from: square, to: rightSquare, promotion }))
   }
   const { prevMove } = board
-  if (prevMove != null && prevMove.from.piece?.type === PieceType.Pawn && prevMove.to.rank === square.rank && Math.abs(prevMove.to.rank - prevMove.from.rank) === 2) {
+  if (
+    prevMove != null && 
+    prevMove.from.piece?.type === PieceType.Pawn && 
+    prevMove.to.rank === square.rank && 
+    Math.abs(prevMove.to.rank - prevMove.from.rank) === 2 && 
+    Math.abs(prevMove.to.file - square.file) === 1
+  ) {
     const enPassantSquare = board.squares.find(s => s.rank === square.rank && s.file === prevMove.to.file)
     if (enPassantSquare != null && squareWithPiece(enPassantSquare) && enPassantSquare.piece.color !== color) {
       const targetSquare = board.squares.find(s => s.rank === nextRow && s.file === enPassantSquare.file)
