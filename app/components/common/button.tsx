@@ -8,7 +8,7 @@ export function Button ({
 }: {
   children: ReactNode
   className?: string
-  onClick: MouseEventHandler<HTMLButtonElement>
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }) {
   return (
     <button

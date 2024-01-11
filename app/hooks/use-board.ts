@@ -5,18 +5,20 @@ import { type Nullable } from 'vitest'
 import { type Square } from '../lib/types/square'
 import { getSquareMoves } from '../lib/utils/moves'
 import { Move } from '../lib/types/move'
-import { type Piece, PieceColor } from '../lib/types/piece'
+import { type Piece } from '../lib/types/piece'
 import { type MatchState } from '../lib/types/game-state'
-import { Player } from '../lib/types/player'
-import { User } from '../lib/types/user'
+import { type Player } from '../lib/types/player'
 
-const wP = new Player(new User('White Player', '/images/guest.webp', 0, 'us'), PieceColor.White)
-const bP = new Player(new User('Black Player', '/images/guest.webp', 0, 'es'), PieceColor.Black)
+export interface Players {
+  whitePlayer: Nullable<Player>
+  blackPlayer: Nullable<Player>
+}
 
 export function useBoard () {
   const [board, setBoard] = useState<Board>(getBoardFromFEN())
-  const [whitePlayer] = useState<Nullable<Player>>(wP)
-  const [blackPlayer] = useState<Nullable<Player>>(bP)
+  const [players, setPlayers] = useState<Players | null>(
+    null
+  )
   const [selectedSquare, setSelectedSquare] = useState<Nullable<Square>>()
   const [availableMoves, setAvailableMoves] = useState<Move[]>([])
   const [promotion, setPromotion] = useState<{
@@ -84,8 +86,7 @@ export function useBoard () {
 
   return {
     board,
-    whitePlayer,
-    blackPlayer,
+    players,
     selectedSquare,
     availableMoves,
     promotion,
@@ -94,6 +95,7 @@ export function useBoard () {
     unselectSquare,
     execMove,
     handlePromotion,
-    resetGame
+    resetGame,
+    setPlayers
   }
 }
