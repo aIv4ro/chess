@@ -21,12 +21,14 @@ const pieceTypeValue = {
   [PieceType.King]: 0
 }
 export class Piece {
-  public readonly value = pieceTypeValue[this.type]
-
+  public readonly value: number
+  
   constructor (
     public readonly type: PieceType,
     public readonly color: PieceColor
-  ) {}
+  ) {
+    this.value = pieceTypeValue[this.type]
+  }
 
   clone () {
     return new Piece(this.type, this.color)
