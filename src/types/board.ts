@@ -130,4 +130,10 @@ export class Board {
   getFen (): string {
     return getFENFromBoard(this)
   }
+
+  getPieces (): Piece[] {
+    return this.squares
+      .filter(square => square.piece != null)
+      .map(square => square.piece!)
+  }
 }

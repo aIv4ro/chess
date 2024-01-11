@@ -35,7 +35,10 @@ export function BoardPlayer ({
           <span className='text-gray-400'>({player.user.elo})</span>
           <FlagIcon code={player.user.nationality} className='w-5' />
         </div>
-        <PlayerCaptures captureStack={captureStack} playerColor={player.color} />
+        <div className='flex items-center'>
+          <PlayerCaptures captureStack={captureStack} playerColor={player.color} />
+        <PlayerScore pieces={board.getPieces()} playerColor={player.color} />
+        </div>
       </div>
     </article>
   )
@@ -61,7 +64,7 @@ function PlayerCaptures ({
   })
 
   return (
-    <div className='flex items-center'>
+    <>
       {playerCapturesValues.map((captures, index) => {
         return (
           <div className='flex items-center' key={index}>
@@ -73,21 +76,19 @@ function PlayerCaptures ({
           </div>
         )
       })}
-      <PlayerScore captureStack={captureStack} playerColor={playerColor} />
-    </div>
+    </>
   )
 }
 
 function PlayerScore ({
-  captureStack,
+  pieces,
   playerColor
 }: {
-  captureStack: Piece[]
+  pieces: Piece[]
   playerColor?: PieceColor
 }) {
-  const { w, b } = captureStack.reduce<{ w: number, b: number }>((acc, capture) => {
-    const oposityColor = capture.color === 'w' ? 'b' : 'w'
-    acc[oposityColor] += capture.value
+  const { w, b } = pieces.reduce<{ w: number, b: number }>((acc, piece) => {
+    acc[piece.color] += piece.value
     return acc
   }, { w: 0, b: 0 })
 
