@@ -1,4 +1,5 @@
 import toast from '../utils/toast'
+import { Button } from './common/button'
 
 export function CopyFenButton ({
   fen
@@ -18,11 +19,10 @@ export function CopyFenButton ({
   }
 
   return (
-    <button
-      className='px-3 py-2 rounded bg-slate-800 hover:bg-slate-600 transition-colors'
+    <Button
       onClick={handleCopyFen}
     >
       Copy FEN
-    </button>
+    </Button>
   )
 }

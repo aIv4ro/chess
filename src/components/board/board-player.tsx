@@ -32,7 +32,7 @@ export function BoardPlayer ({
           <h3 className='text-white font-semibold flex gap-1 items-center'>
             {player.user.name}
           </h3>
-          <span className='text-gray-400 font-normal'>({player.user.elo})</span>
+          <span className='text-gray-400'>({player.user.elo})</span>
           <FlagIcon code={player.user.nationality} className='w-5' />
         </div>
         <PlayerCaptures captureStack={captureStack} playerColor={player.color} />

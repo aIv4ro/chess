@@ -16,11 +16,11 @@ export function PiecePicker () {
   }
 
   return (
-    <div className='absolute inset-0 grid place-content-center bg-zinc-900/70'>
-      <div className='bg-zinc-800 flex rounded'>
+    <div className='absolute inset-0 grid place-content-center bg-primary/70'>
+      <div className='bg-secondary flex rounded-lg overflow-hidden border border-gray-500'>
         {
         types.map((pieceType, index) => {
-          const asset = `/pieces/${pieceColor}-${pieceType}.png`
+          const asset = `/pieces/${pieceColor}${pieceType}.webp`
           return (
             <button
               key={index}
