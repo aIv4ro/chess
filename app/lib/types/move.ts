@@ -8,7 +8,7 @@ export class Move {
   public readonly enPassant: Nullable<Square> = null
   public readonly castle: Nullable<Move> = null
   public readonly promotion: boolean
-  public readonly promotionPiece: Nullable<Piece> = null
+  public promotionPiece: Nullable<Piece> = null
   public readonly isReverse: boolean
 
   constructor ({

@@ -14,10 +14,16 @@ export interface Players {
   blackPlayer: Nullable<Player>
 }
 
-export function useBoard () {
+export function useBoard ({
+  initialPlayers
+}: {
+  initialPlayers: Players | null
+} = {
+  initialPlayers: null
+}) {
   const [board, setBoard] = useState<Board>(getBoardFromFEN())
   const [players, setPlayers] = useState<Players | null>(
-    null
+    initialPlayers
   )
   const [selectedSquare, setSelectedSquare] = useState<Nullable<Square>>()
   const [availableMoves, setAvailableMoves] = useState<Move[]>([])

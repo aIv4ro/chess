@@ -6,6 +6,18 @@ import { type Square } from '../types/square'
 type SquareWithPiece = Square & { piece: Piece }
 const squareWithPiece = (square: Square): square is SquareWithPiece => square.piece != null
 
+export function getAllTurnMoves ({
+  board
+}: {
+  board: Board
+}): Move[] {
+  return board.squares.filter(square => {
+    return squareWithPiece(square) && square.piece.color === board.turn
+  }).flatMap(square => {
+    return getSquareMoves({ board, square })
+  })
+}
+
 export function getSquareMoves ({
   board,
   square,

@@ -7,7 +7,8 @@ import { twMerge } from 'tailwind-merge'
 import { Button } from '../common/button'
 
 export function MatchState () {
-  const { promotion, matchState, resetGame, board, whitePlayer, blackPlayer } = useBoardContext()
+  const { promotion, matchState, resetGame, board, players } = useBoardContext()
+  const { whitePlayer, blackPlayer } = players!
 
   if (promotion.show || matchState == null || matchState === MatchStateEnum.Other) {
     return null

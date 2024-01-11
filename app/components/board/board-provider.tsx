@@ -1,12 +1,16 @@
 import { BoardContext } from '../../hooks/board-context'
-import { useBoard } from '../../hooks/use-board'
+import { type Players, useBoard } from '../../hooks/use-board'
 
 export function BoardProvider ({
-  children
+  children,
+  players
 }: {
   children: React.ReactNode
+  players: Players
 }) {
-  const boardState = useBoard()
+  const boardState = useBoard({
+    initialPlayers: players
+  })
   return (
     <BoardContext.Provider value={boardState}>
       {children}
