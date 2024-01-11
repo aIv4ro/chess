@@ -10,8 +10,8 @@ import { MatchState } from '../types/game-state'
 import { Player } from '../types/player'
 import { User } from '../types/user'
 
-const wP = new Player(new User('White Player', 'https://fastly.picsum.photos/id/143/200/200.jpg?hmac=zGj8dhmmqaaQZDcHhU9C0itdL12zcGTpuVdQiVrYiEQ', 0, 'us'), PieceColor.White)
-const bP = new Player(new User('Black Player', 'https://fastly.picsum.photos/id/999/200/200.jpg?hmac=iwXALEStJtHL4Thxk_YbLNHNmjq9ZrIQYFUvtxndOaU', 0, 'es'), PieceColor.Black)
+const wP = new Player(new User('White Player', '/images/guest.webp', 0, 'us'), PieceColor.White)
+const bP = new Player(new User('Black Player', '/images/guest.webp', 0, 'es'), PieceColor.Black)
 
 export function useBoard () {
   const [board, setBoard] = useState<Board>(getBoardFromFEN())
